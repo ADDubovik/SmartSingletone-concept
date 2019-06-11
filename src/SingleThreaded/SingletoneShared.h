@@ -15,7 +15,7 @@ public:
   SingletoneShared& operator=(const SingletoneShared &) = delete;
   SingletoneShared& operator=(SingletoneShared &&) = delete;
 
-  static std::shared_ptr<SingletoneShared>& instance()
+  static std::shared_ptr<SingletoneShared> instance()
   {
     // "new" and no std::make_shared because of private c-tor
     static auto inst = std::shared_ptr<SingletoneShared>(new SingletoneShared);
