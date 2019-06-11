@@ -10,4 +10,4 @@ set (BRAND_COMPANYNAME "ADDubovik")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-add_subdirectory(src)
+add_subdirectory(src/SingleThreaded)
