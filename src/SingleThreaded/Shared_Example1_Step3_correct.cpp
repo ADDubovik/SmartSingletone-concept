@@ -7,24 +7,27 @@ class SharedSingleThreadedUser
 {
 public:
   SharedSingleThreadedUser()
+      // To ensure that singletone will be constucted before user
+      : m_singletone(SingletoneShared::instance())
   {
-    // To ensure that singletone will be constucted before user
-    SingletoneShared::instance();
   }
 
   ~SharedSingleThreadedUser()
   {
-    // Sometimes this check may result as "false" even for destroyed singleton
+    // Sometimes this check may result as "false" even for destroyed singletone
     // preventing from visual effects of undefined behaviour ...
-    //if ( auto instance = SingletoneShared::instance() )
+    //if ( m_singletone )
     //  for ( int i = 0; i < 100; ++i )
-    //    instance->add(i);
+    //    m_singletone->add(i);
 
     // ... so this code will demonstrate UB in colour
-    auto instance = SingletoneShared::instance();
     for ( int i = 0; i < 100; ++i )
-      instance->add(i);
+      m_singletone->add(i);
   }
+
+private:
+  // A copy of smart pointer, not a reference
+  std::shared_ptr<SingletoneShared> m_singletone;
 };
 
 
@@ -63,7 +66,10 @@ int main()
   // - singletone;
   // - emptyUnique,
   // but now userUnique is empty, and userUnique is filled,
-  // so destruction order is incorrect
+  // so destruction order is incorrect...
+
+  // ... but user have made a copy of shared_ptr when it was available,
+  // so it's correct again.
 
 	return 0;
 }
