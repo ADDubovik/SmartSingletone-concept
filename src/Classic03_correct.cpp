@@ -7,7 +7,7 @@ public:
   ClassicSingleThreadedUser()
   {
     // To ensure that singletone will be constucted before user
-    auto &instance = SingletoneClassic::instance();
+    SingletoneClassic::instance();
   }
 
   ~ClassicSingleThreadedUser()
