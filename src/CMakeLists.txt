@@ -10,4 +10,4 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(${PROJECT_NAME}DemoClassic DemoClassic.cpp)
+add_executable(DemoClassicCorrect01 DemoClassicCorrect01.cpp)

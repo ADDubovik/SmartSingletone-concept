@@ -21,14 +21,14 @@ public:
     return inst;
   }
 
-  void add(double d)
+  void add(int value)
   {
     std::lock_guard<std::mutex> guard(m_data.first);
-    m_data.second.emplace(d);
+    m_data.second.emplace(value);
   }
 
 private:
   SingletoneClassic() = default;
 
-  std::pair<std::mutex, std::set<double>> m_data;
+  std::pair<std::mutex, std::set<int>> m_data;
 };
