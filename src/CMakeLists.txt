@@ -11,3 +11,4 @@ include_directories(
 )
 
 add_executable(DemoClassicCorrect01 DemoClassicCorrect01.cpp)
+add_executable(DemoClassicCorrect02 DemoClassicCorrect02.cpp)
