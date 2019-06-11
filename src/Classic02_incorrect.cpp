@@ -1,7 +1,5 @@
 #include "SingletoneClassic.h"
 
-#include <memory>
-
 
 class ClassicSingleThreadedUser
 {
