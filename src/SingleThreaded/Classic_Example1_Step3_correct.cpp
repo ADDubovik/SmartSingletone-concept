@@ -6,7 +6,7 @@ class ClassicSingleThreadedUtility
 public:
   ClassicSingleThreadedUtility()
   {
-    // To ensure that singletone will be constucted before user
+    // To ensure that singletone will be constucted before utility
     SingletonClassic::instance();
   }
 
@@ -19,24 +19,19 @@ public:
 };
 
 
-void createStaticUtility()
-{
-  static auto user = ClassicSingleThreadedUtility();
-}
+// 1. Create utility
+// 2. Create singletone
+auto utility = ClassicSingleThreadedUtility();
+auto &singleton = SingletonClassic::instance();
+
+// This seems to guarantee destruction in order:
+// - singletone;
+// - utility.
+// This order is incorrect.
+// But ClassicSingleThreadedUtility c-tor was modified to prevent this.
 
 
 int main()
 {
-  // 1. Create user
-  createStaticUtility();
-  // 2. Create singletone
-  SingletonClassic::instance();
-
-  // This seems to guarantee destruction in order:
-  // - singletone;
-  // - user.
-  // This order is incorrect.
-  // But ClassicSingleThreadedUtility c-tor was modified to prevent this.
-
 	return 0;
 }

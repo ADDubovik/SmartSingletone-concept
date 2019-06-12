@@ -14,23 +14,18 @@ public:
 };
 
 
-void createStaticUtility()
-{
-  static auto user = ClassicSingleThreadedUtility();
-}
+// 1. Create singletone
+// 2. Create utility
+auto &singleton = SingletonClassic::instance();
+auto utility = ClassicSingleThreadedUtility();
+
+// This guarantee destruction in order:
+// - utility;
+// - singletone.
+// This order is correct.
 
 
 int main()
 {
-  // 1. Create singletone
-  SingletonClassic::instance();
-  // 2. Create user
-  createStaticUtility();
-
-  // This guarantee destruction in order:
-  // - user;
-  // - singletone.
-  // This order is correct.
-
 	return 0;
 }

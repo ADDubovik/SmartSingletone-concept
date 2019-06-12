@@ -8,7 +8,7 @@ class ClassicSingleThreadedUtility
 public:
   ClassicSingleThreadedUtility()
   {
-    // To ensure that singletone will be constucted before user
+    // To ensure that singletone will be constucted before utility
     SingletonClassic::instance();
   }
 
@@ -21,33 +21,20 @@ public:
 };
 
 
-auto& getEmptyStaticUniqueUtility()
-{
-  static std::unique_ptr<ClassicSingleThreadedUtility> emptyUnique;
-  return emptyUnique;
-}
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of modified ClassicSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<ClassicSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<ClassicSingleThreadedUtility>();
 
-
-auto& getStaticUniqueUtility()
-{
-  static auto userUnique = std::make_unique<ClassicSingleThreadedUtility>();
-  return userUnique;
-}
+// This guarantee destruction in order:
+// - utilityUnique;
+// - singletone;
+// - emptyUnique.
+// This order is correct
 
 
 int main()
 {
-  // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUtility();
-  // 2. Create singletone (because of modified ClassicSingleThreadedUtility c-tor)
-  // 3. Create user
-  getStaticUniqueUtility();
-
-  // This guarantee destruction in order:
-  // - userUnique;
-  // - singletone;
-  // - emptyUnique.
-  // This order is correct
-
 	return 0;
 }
