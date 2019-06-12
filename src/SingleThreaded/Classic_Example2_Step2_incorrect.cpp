@@ -31,7 +31,7 @@ auto utilityUnique = std::make_unique<ClassicSingleThreadedUtility>();
 // - utilityUnique;
 // - singletone;
 // - emptyUnique.
-// This order is correct ...
+// This order seems to be correct ...
 
 
 int main()
@@ -43,7 +43,7 @@ int main()
   // - utilityUnique;
   // - singletone;
   // - emptyUnique,
-  // but now utilityUnique is empty, and utilityUnique is filled,
+  // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect
 
 	return 0;
