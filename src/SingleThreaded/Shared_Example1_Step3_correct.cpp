@@ -20,7 +20,7 @@ public:
     //  for ( int i = 0; i < 100; ++i )
     //    m_singletone->add(i);
 
-    // ... so this code will demonstrate UB in colour
+    // ... so this code will allow to demonstrate UB in colour
     for ( int i = 0; i < 100; ++i )
       m_singletone->add(i);
   }
@@ -31,41 +31,28 @@ private:
 };
 
 
-auto& getEmptyStaticUniqueUtility()
-{
-  static std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
-  return emptyUnique;
-}
-
-
-auto& getStaticUniqueUtility()
-{
-  static auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
-  return utilityUnique;
-}
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of SharedSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
 
 
 int main()
 {
-  // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUtility();
-  // 2. Create singletone (because of modified SharedSingleThreadedUtility c-tor)
-  // 3. Create utility
-  getStaticUniqueUtility();
-
   // This guarantee destruction in order:
   // - utilityUnique;
   // - singletone;
   // - emptyUnique.
   // This order is correct ...
-  // ... but we swap unique_ptrs
-  getEmptyStaticUniqueUtility().swap(getStaticUniqueUtility());
+  // ... but user swaps unique_ptrs
+  emptyUnique.swap(utilityUnique);
 
   // Guaranteed destruction order is the same:
   // - utilityUnique;
   // - singletone;
   // - emptyUnique,
-  // but now utilityUnique is empty, and utilityUnique is filled,
+  // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect...
 
   // ... but utility have made a copy of shared_ptr when it was available,

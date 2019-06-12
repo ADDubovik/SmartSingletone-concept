@@ -28,41 +28,29 @@ public:
 };
 
 
-auto& getEmptyStaticUniqueUtility()
-{
-  static std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
-  return emptyUnique;
-}
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of modified SharedSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
 
-
-auto& getStaticUniqueUtility()
-{
-  static auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
-  return utilityUnique;
-}
+// This guarantee destruction in order:
+// - utilityUnique;
+// - singletone;
+// - emptyUnique.
+// This order seems to be correct ...
 
 
 int main()
 {
-  // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUtility();
-  // 2. Create singletone (because of modified SharedSingleThreadedUtility c-tor)
-  // 3. Create utility
-  getStaticUniqueUtility();
-
-  // This guarantee destruction in order:
-  // - utilityUnique;
-  // - singletone;
-  // - emptyUnique.
-  // This order is correct ...
-  // ... but we swap unique_ptrs
-  getEmptyStaticUniqueUtility().swap(getStaticUniqueUtility());
+  // ... but user swaps unique_ptrs
+  emptyUnique.swap(utilityUnique);
 
   // Guaranteed destruction order is the same:
   // - utilityUnique;
   // - singletone;
   // - emptyUnique,
-  // but now utilityUnique is empty, and utilityUnique is filled,
+  // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect
 
 	return 0;

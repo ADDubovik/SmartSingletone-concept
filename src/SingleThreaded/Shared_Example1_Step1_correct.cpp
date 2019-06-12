@@ -21,33 +21,20 @@ public:
 };
 
 
-auto& getEmptyStaticUniqueUtility()
-{
-  static std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
-  return emptyUnique;
-}
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of modified SharedSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<SharedSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
 
-
-auto& getStaticUniqueUtility()
-{
-  static auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
-  return utilityUnique;
-}
+// This guarantee destruction in order:
+// - utilityUnique;
+// - singletone;
+// - emptyUnique.
+// This order is correct
 
 
 int main()
 {
-  // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUtility();
-  // 2. Create singletone (because of modified SharedSingleThreadedUtility c-tor)
-  // 3. Create utility
-  getStaticUniqueUtility();
-
-  // This guarantee destruction in order:
-  // - utilityUnique;
-  // - singletone;
-  // - emptyUnique.
-  // This order is correct
-
 	return 0;
 }

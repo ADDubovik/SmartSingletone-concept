@@ -21,7 +21,7 @@ public:
     //  for ( int i = 0; i < 100; ++i )
     //    m_singletone->add(i);
 
-    // ... so this code will demonstrate UB in colour
+    // ... so this code will allow to demonstrate UB in colour
     for ( int i = 0; i < 100; ++i )
       m_singletone->add(i);
   }
@@ -32,35 +32,36 @@ private:
 };
 
 
-void getStaticUtility()
-{
-  static auto utility = SharedSingleThreadedUtility();
-}
-
-
 void cracker()
 {
   SharedSingleThreadedUtility();
 }
 
 
+int registerCracker()
+{
+  std::atexit(&cracker);
+  return 0;
+}
+
+
+// 1. Register cracker() using std::atexit
+// 2. Create singletone
+// 3. Create utility
+auto reg = registerCracker();
+auto utility = SharedSingleThreadedUtility();
+
+// This guarantee destruction in order:
+// - utility;
+// - singletone.
+// This order is correct.
+// Additionally, there's a copy of shared_ptr in the class instance...
+// ... but there was std::atexit registered before singletone,
+// so cracker() will be invoked after destruction of utility and singletone.
+// There's second try to create a singletone - and it's incorrect.
+
+
 int main()
 {
-  // 1. Register cracker() using std::atexit
-  std::atexit(&cracker);
-  // 2. Create singletone
-  // 3. Create utility
-  getStaticUtility();
-
-  // This guarantee destruction in order:
-  // - utility;
-  // - singletone.
-  // This order is correct.
-  // Additionally, there's a copy of shared_ptr in the class instance...
-
-  // ... but there's std::atexit registered before singletone,
-  // so cracker() will be invoked after destruction of utility and singletone.
-  // There's second try to create a singletone - and it's incorrect.
-
 	return 0;
 }
