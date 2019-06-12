@@ -27,41 +27,28 @@ private:
 };
 
 
-auto& getEmptyStaticUniqueUtility()
-{
-  static std::unique_ptr<WeakSingleThreadedUtility> emptyUnique;
-  return emptyUnique;
-}
-
-
-auto& getStaticUniqueUtility()
-{
-  static auto utilityUnique = std::make_unique<WeakSingleThreadedUtility>();
-  return utilityUnique;
-}
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of WeakSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<WeakSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<WeakSingleThreadedUtility>();
 
 
 int main()
 {
-  // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUtility();
-  // 2. Create singletone (because of modified WeakSingleThreadedUtility c-tor)
-  // 3. Create utility
-  getStaticUniqueUtility();
-
   // This guarantee destruction in order:
   // - utilityUnique;
   // - singletone;
   // - emptyUnique.
   // This order is correct ...
-  // ... but we swap unique_ptrs
-  getEmptyStaticUniqueUtility().swap(getStaticUniqueUtility());
+  // ... but user swaps unique_ptrs
+  emptyUnique.swap(utilityUnique);
 
   // Guaranteed destruction order is the same:
   // - utilityUnique;
   // - singletone;
   // - emptyUnique,
-  // but now utilityUnique is empty, and utilityUnique is filled,
+  // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect...
 
   // ... but utility have made a weak copy of shared_ptr when it was available,
