@@ -15,7 +15,7 @@ public:
   ~WeakSingleThreadedUser()
   {
     // Sometimes this check may result as "false" even in case of incorrect usage,
-    // and there's no way to demonstrate undefined behaviour in colour
+    // and there's no way to guarantee a demonstration of undefined behaviour in colour
     if ( auto strong = m_weak.lock() )
       for ( int i = 0; i < 100; ++i )
         strong->add(i);
