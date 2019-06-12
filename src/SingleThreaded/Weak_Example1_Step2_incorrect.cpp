@@ -4,16 +4,16 @@
 #include <cstdlib>
 
 
-class WeakSingleThreadedUser
+class WeakSingleThreadedUtility
 {
 public:
-  WeakSingleThreadedUser()
+  WeakSingleThreadedUtility()
       // To ensure that singletone will be constucted before user
       : m_weak(SingletonWeak::instance())
   {
   }
 
-  ~WeakSingleThreadedUser()
+  ~WeakSingleThreadedUtility()
   {
     // Sometimes this check may result as "false" even in case of incorrect usage,
     // and there's no way to guarantee a demonstration of undefined behaviour in colour
@@ -28,15 +28,15 @@ private:
 };
 
 
-void getStaticUser()
+void getStaticUtility()
 {
-  static auto user = WeakSingleThreadedUser();
+  static auto user = WeakSingleThreadedUtility();
 }
 
 
 void cracker()
 {
-  WeakSingleThreadedUser();
+  WeakSingleThreadedUtility();
 }
 
 
@@ -46,7 +46,7 @@ int main()
   std::atexit(&cracker);
   // 2. Create singletone
   // 3. Create user
-  getStaticUser();
+  getStaticUtility();
 
   // This guarantee destruction in order:
   // - user;

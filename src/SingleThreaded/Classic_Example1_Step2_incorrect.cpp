@@ -1,12 +1,12 @@
 #include "SingletonClassic.h"
 
 
-class ClassicSingleThreadedUser
+class ClassicSingleThreadedUtility
 {
 public:
-  ClassicSingleThreadedUser() = default;
+  ClassicSingleThreadedUtility() = default;
 
-  ~ClassicSingleThreadedUser()
+  ~ClassicSingleThreadedUtility()
   {
     auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
@@ -15,16 +15,16 @@ public:
 };
 
 
-void createStaticUser()
+void createStaticUtility()
 {
-  static auto user = ClassicSingleThreadedUser();
+  static auto user = ClassicSingleThreadedUtility();
 }
 
 
 int main()
 {
   // 1. Create user
-  createStaticUser();
+  createStaticUtility();
   // 2. Create singletone
   SingletonClassic::instance();
 

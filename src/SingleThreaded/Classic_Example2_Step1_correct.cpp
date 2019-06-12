@@ -3,16 +3,16 @@
 #include <memory>
 
 
-class ClassicSingleThreadedUser
+class ClassicSingleThreadedUtility
 {
 public:
-  ClassicSingleThreadedUser()
+  ClassicSingleThreadedUtility()
   {
     // To ensure that singletone will be constucted before user
     SingletonClassic::instance();
   }
 
-  ~ClassicSingleThreadedUser()
+  ~ClassicSingleThreadedUtility()
   {
     auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
@@ -21,16 +21,16 @@ public:
 };
 
 
-auto& getEmptyStaticUniqueUser()
+auto& getEmptyStaticUniqueUtility()
 {
-  static std::unique_ptr<ClassicSingleThreadedUser> emptyUnique;
+  static std::unique_ptr<ClassicSingleThreadedUtility> emptyUnique;
   return emptyUnique;
 }
 
 
-auto& getStaticUniqueUser()
+auto& getStaticUniqueUtility()
 {
-  static auto userUnique = std::make_unique<ClassicSingleThreadedUser>();
+  static auto userUnique = std::make_unique<ClassicSingleThreadedUtility>();
   return userUnique;
 }
 
@@ -38,10 +38,10 @@ auto& getStaticUniqueUser()
 int main()
 {
   // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUser();
-  // 2. Create singletone (because of modified ClassicSingleThreadedUser c-tor)
+  getEmptyStaticUniqueUtility();
+  // 2. Create singletone (because of modified ClassicSingleThreadedUtility c-tor)
   // 3. Create user
-  getStaticUniqueUser();
+  getStaticUniqueUtility();
 
   // This guarantee destruction in order:
   // - userUnique;

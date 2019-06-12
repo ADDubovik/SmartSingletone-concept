@@ -4,16 +4,16 @@
 #include <cstdlib>
 
 
-class SharedSingleThreadedUser
+class SharedSingleThreadedUtility
 {
 public:
-  SharedSingleThreadedUser()
+  SharedSingleThreadedUtility()
       // To ensure that singletone will be constucted before user
       : m_singletone(SingletonShared::instance())
   {
   }
 
-  ~SharedSingleThreadedUser()
+  ~SharedSingleThreadedUtility()
   {
     // Sometimes this check may result as "false" even for destroyed singletone
     // preventing from visual effects of undefined behaviour ...
@@ -32,15 +32,15 @@ private:
 };
 
 
-void getStaticUser()
+void getStaticUtility()
 {
-  static auto user = SharedSingleThreadedUser();
+  static auto user = SharedSingleThreadedUtility();
 }
 
 
 void cracker()
 {
-  SharedSingleThreadedUser();
+  SharedSingleThreadedUtility();
 }
 
 
@@ -50,7 +50,7 @@ int main()
   std::atexit(&cracker);
   // 2. Create singletone
   // 3. Create user
-  getStaticUser();
+  getStaticUtility();
 
   // This guarantee destruction in order:
   // - user;

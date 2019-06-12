@@ -3,16 +3,16 @@
 #include <memory>
 
 
-class WeakSingleThreadedUser
+class WeakSingleThreadedUtility
 {
 public:
-  WeakSingleThreadedUser()
+  WeakSingleThreadedUtility()
       // To ensure that singletone will be constucted before user
       : m_weak(SingletonWeak::instance())
   {
   }
 
-  ~WeakSingleThreadedUser()
+  ~WeakSingleThreadedUtility()
   {
     // Sometimes this check may result as "false" even in case of incorrect usage,
     // and there's no way to guarantee a demonstration of undefined behaviour in colour
@@ -27,16 +27,16 @@ private:
 };
 
 
-auto& getEmptyStaticUniqueUser()
+auto& getEmptyStaticUniqueUtility()
 {
-  static std::unique_ptr<WeakSingleThreadedUser> emptyUnique;
+  static std::unique_ptr<WeakSingleThreadedUtility> emptyUnique;
   return emptyUnique;
 }
 
 
-auto& getStaticUniqueUser()
+auto& getStaticUniqueUtility()
 {
-  static auto userUnique = std::make_unique<WeakSingleThreadedUser>();
+  static auto userUnique = std::make_unique<WeakSingleThreadedUtility>();
   return userUnique;
 }
 
@@ -44,10 +44,10 @@ auto& getStaticUniqueUser()
 int main()
 {
   // 1. Create an empty unique_ptr
-  getEmptyStaticUniqueUser();
-  // 2. Create singletone (because of modified WeakSingleThreadedUser c-tor)
+  getEmptyStaticUniqueUtility();
+  // 2. Create singletone (because of modified WeakSingleThreadedUtility c-tor)
   // 3. Create user
-  getStaticUniqueUser();
+  getStaticUniqueUtility();
 
   // This guarantee destruction in order:
   // - userUnique;
@@ -55,7 +55,7 @@ int main()
   // - emptyUnique.
   // This order is correct ...
   // ... but we swap unique_ptrs
-  getEmptyStaticUniqueUser().swap(getStaticUniqueUser());
+  getEmptyStaticUniqueUtility().swap(getStaticUniqueUtility());
 
   // Guaranteed destruction order is the same:
   // - userUnique;

@@ -1,16 +1,16 @@
 #include "SingletonClassic.h"
 
 
-class ClassicSingleThreadedUser
+class ClassicSingleThreadedUtility
 {
 public:
-  ClassicSingleThreadedUser()
+  ClassicSingleThreadedUtility()
   {
     // To ensure that singletone will be constucted before user
     SingletonClassic::instance();
   }
 
-  ~ClassicSingleThreadedUser()
+  ~ClassicSingleThreadedUtility()
   {
     auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
@@ -19,16 +19,16 @@ public:
 };
 
 
-void createStaticUser()
+void createStaticUtility()
 {
-  static auto user = ClassicSingleThreadedUser();
+  static auto user = ClassicSingleThreadedUtility();
 }
 
 
 int main()
 {
   // 1. Create user
-  createStaticUser();
+  createStaticUtility();
   // 2. Create singletone
   SingletonClassic::instance();
 
@@ -36,7 +36,7 @@ int main()
   // - singletone;
   // - user.
   // This order is incorrect.
-  // But ClassicSingleThreadedUser c-tor was modified to prevent this.
+  // But ClassicSingleThreadedUtility c-tor was modified to prevent this.
 
 	return 0;
 }
