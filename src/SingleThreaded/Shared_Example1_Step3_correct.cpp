@@ -1,4 +1,4 @@
-#include "SingletoneShared.h"
+#include "SingletonShared.h"
 
 #include <memory>
 
@@ -8,7 +8,7 @@ class SharedSingleThreadedUser
 public:
   SharedSingleThreadedUser()
       // To ensure that singletone will be constucted before user
-      : m_singletone(SingletoneShared::instance())
+      : m_singletone(SingletonShared::instance())
   {
   }
 
@@ -27,7 +27,7 @@ public:
 
 private:
   // A copy of smart pointer, not a reference
-  std::shared_ptr<SingletoneShared> m_singletone;
+  std::shared_ptr<SingletonShared> m_singletone;
 };
 
 

@@ -1,4 +1,4 @@
-#include "SingletoneWeak.h"
+#include "SingletonWeak.h"
 
 #include <memory>
 
@@ -8,7 +8,7 @@ class WeakSingleThreadedUser
 public:
   WeakSingleThreadedUser()
       // To ensure that singletone will be constucted before user
-      : m_weak(SingletoneWeak::instance())
+      : m_weak(SingletonWeak::instance())
   {
   }
 
@@ -23,7 +23,7 @@ public:
 
 private:
   // A weak copy of smart pointer, not a reference
-  std::weak_ptr<SingletoneWeak> m_weak;
+  std::weak_ptr<SingletonWeak> m_weak;
 };
 
 

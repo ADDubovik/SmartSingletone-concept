@@ -1,4 +1,4 @@
-#include "SingletoneClassic.h"
+#include "SingletonClassic.h"
 
 
 class ClassicSingleThreadedUser
@@ -7,7 +7,7 @@ public:
   ClassicSingleThreadedUser() = default;
   ~ClassicSingleThreadedUser()
   {
-    auto &instance = SingletoneClassic::instance();
+    auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
       instance.add(i);
   }
@@ -23,7 +23,7 @@ void createStaticUser()
 int main()
 {
   // 1. Create singletone
-  SingletoneClassic::instance();
+  SingletonClassic::instance();
   // 2. Create user
   createStaticUser();
 

@@ -1,9 +1,9 @@
 
 set(SRC
-	SingletoneClassic.h
-	SingletonePayload.h
-	SingletoneShared.h
-	SingletoneWeak.h
+	SingletonClassic.h
+	SingletonPayload.h
+	SingletonShared.h
+	SingletonWeak.h
 	fake.cpp
 )
 

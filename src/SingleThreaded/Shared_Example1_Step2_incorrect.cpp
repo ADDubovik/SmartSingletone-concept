@@ -1,4 +1,4 @@
-#include "SingletoneShared.h"
+#include "SingletonShared.h"
 
 #include <memory>
 
@@ -9,19 +9,19 @@ public:
   SharedSingleThreadedUser()
   {
     // To ensure that singletone will be constucted before user
-    SingletoneShared::instance();
+    SingletonShared::instance();
   }
 
   ~SharedSingleThreadedUser()
   {
     // Sometimes this check may result as "false" even for destroyed singleton
     // preventing from visual effects of undefined behaviour ...
-    //if ( auto instance = SingletoneShared::instance() )
+    //if ( auto instance = SingletonShared::instance() )
     //  for ( int i = 0; i < 100; ++i )
     //    instance->add(i);
 
     // ... so this code will demonstrate UB in colour
-    auto instance = SingletoneShared::instance();
+    auto instance = SingletonShared::instance();
     for ( int i = 0; i < 100; ++i )
       instance->add(i);
   }

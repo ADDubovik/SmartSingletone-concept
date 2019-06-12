@@ -1,4 +1,4 @@
-#include "SingletoneClassic.h"
+#include "SingletonClassic.h"
 
 #include <memory>
 
@@ -9,12 +9,12 @@ public:
   ClassicSingleThreadedUser()
   {
     // To ensure that singletone will be constucted before user
-    SingletoneClassic::instance();
+    SingletonClassic::instance();
   }
 
   ~ClassicSingleThreadedUser()
   {
-    auto &instance = SingletoneClassic::instance();
+    auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
       instance.add(i);
   }

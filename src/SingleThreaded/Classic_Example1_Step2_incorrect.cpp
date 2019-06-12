@@ -1,4 +1,4 @@
-#include "SingletoneClassic.h"
+#include "SingletonClassic.h"
 
 
 class ClassicSingleThreadedUser
@@ -8,7 +8,7 @@ public:
 
   ~ClassicSingleThreadedUser()
   {
-    auto &instance = SingletoneClassic::instance();
+    auto &instance = SingletonClassic::instance();
     for ( int i = 0; i < 100; ++i )
       instance.add(i);
   }
@@ -26,7 +26,7 @@ int main()
   // 1. Create user
   createStaticUser();
   // 2. Create singletone
-  SingletoneClassic::instance();
+  SingletonClassic::instance();
 
   // This will cause destruction in order:
   // - singletone;
