@@ -1,10 +1,11 @@
 #pragma once
 
-#include <set>
+#include "SingletonePayload.h"
+
 #include <memory>
 
 
-class SingletoneShared
+class SingletoneShared : public SingletonePayload
 {
 public:
   ~SingletoneShared() = default;
@@ -22,13 +23,6 @@ public:
     return inst;
   }
 
-  void add(int value)
-  {
-    m_data.emplace(value);
-  }
-
 private:
   SingletoneShared() = default;
-
-  std::set<int> m_data;
 };

@@ -1,6 +1,7 @@
 
 set(SRC
 	SingletoneClassic.h
+	SingletonePayload.h
 	SingletoneShared.h
 	SingletoneWeak.h
 	fake.cpp

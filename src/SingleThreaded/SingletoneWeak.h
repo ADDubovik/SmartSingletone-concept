@@ -1,10 +1,11 @@
 #pragma once
 
-#include <set>
+#include "SingletonePayload.h"
+
 #include <memory>
 
 
-class SingletoneWeak
+class SingletoneWeak : public SingletonePayload
 {
 public:
   ~SingletoneWeak() = default;
@@ -22,13 +23,6 @@ public:
     return inst;
   }
 
-  void add(int value)
-  {
-    m_data.emplace(value);
-  }
-
 private:
   SingletoneWeak() = default;
-
-  std::set<int> m_data;
 };

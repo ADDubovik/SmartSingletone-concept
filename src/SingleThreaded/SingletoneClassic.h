@@ -1,9 +1,11 @@
 #pragma once
 
+#include "SingletonePayload.h"
+
 #include <set>
 
 
-class SingletoneClassic
+class SingletoneClassic : public SingletonePayload
 {
 public:
   ~SingletoneClassic() = default;
@@ -20,13 +22,6 @@ public:
     return inst;
   }
 
-  void add(int value)
-  {
-    m_data.emplace(value);
-  }
-
 private:
   SingletoneClassic() = default;
-
-  std::set<int> m_data;
 };
