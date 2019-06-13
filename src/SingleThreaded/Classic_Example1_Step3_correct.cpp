@@ -11,6 +11,8 @@ public:
   {
     thread_local auto semaphore_strong = std::make_shared<char>(0);
     m_semaphore_weak = semaphore_strong;
+
+    SingletonClassic::instance();
   }
 
   ~ClassicSingleThreadedUtility()
