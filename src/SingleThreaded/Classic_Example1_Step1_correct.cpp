@@ -1,10 +1,17 @@
 #include "SingletonClassic.h"
 
+#include <memory>
+
 
 class ClassicSingleThreadedUtility
 {
 public:
-  ClassicSingleThreadedUtility() = default;
+  ClassicSingleThreadedUtility()
+  {
+    // To ensure that singletone will be constucted before utility
+    SingletonClassic::instance();
+  }
+
   ~ClassicSingleThreadedUtility()
   {
     auto &instance = SingletonClassic::instance();
@@ -14,15 +21,17 @@ public:
 };
 
 
-// 1. Create singletone
-// 2. Create utility
-auto &singleton = SingletonClassic::instance();
-auto utility = ClassicSingleThreadedUtility();
+// 1. Create an empty unique_ptr
+// 2. Create singletone (because of modified ClassicSingleThreadedUtility c-tor)
+// 3. Create utility
+std::unique_ptr<ClassicSingleThreadedUtility> emptyUnique;
+auto utilityUnique = std::make_unique<ClassicSingleThreadedUtility>();
 
 // This guarantee destruction in order:
-// - utility;
-// - singletone.
-// This order is correct.
+// - utilityUnique;
+// - singletone;
+// - emptyUnique.
+// This order is correct
 
 
 int main()
