@@ -9,15 +9,15 @@ class ClassicSingleThreadedUtility
 public:
   ClassicSingleThreadedUtility()
   {
-    thread_local auto semaphore_strong = std::make_shared<char>(0);
-    m_semaphore_weak = semaphore_strong;
+    thread_local auto flag_strong = std::make_shared<char>(0);
+    m_flag_weak = flag_strong;
 
     SingletonClassic::instance();
   }
 
   ~ClassicSingleThreadedUtility()
   {
-    if ( m_semaphore_weak.lock() )
+    if ( m_flag_weak.lock() )
     {
       std::cout << "Normal processing" << std::endl;
       for ( int i = 0; i < 100; ++i )
@@ -26,7 +26,7 @@ public:
   }
 
 private:
-  std::weak_ptr<char> m_semaphore_weak;
+  std::weak_ptr<char> m_flag_weak;
 };
 
 
