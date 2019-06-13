@@ -34,17 +34,10 @@ void cracker()
 }
 
 
-int registerCracker()
-{
-  std::atexit(&cracker);
-  return 0;
-}
-
-
 // 1. Register cracker() using std::atexit
 // 2. Create singletone
 // 3. Create utility
-auto reg = registerCracker();
+auto reg = [](){ std::atexit(&cracker); return 0; }();
 auto utility = WeakSingleThreadedUtility();
 
 // This guarantee destruction in order:
