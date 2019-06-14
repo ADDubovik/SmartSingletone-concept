@@ -54,5 +54,5 @@ int main()
   // ... but utility have made a weak copy of shared_ptr when it was available,
   // so it's correct again.
 
-	return 0;
+  return 0;
 }

@@ -36,5 +36,5 @@ auto utilityUnique = std::make_unique<SharedSingleThreadedUtility>();
 
 int main()
 {
-	return 0;
+  return 0;
 }

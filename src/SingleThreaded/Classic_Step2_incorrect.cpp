@@ -46,5 +46,5 @@ int main()
   // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect
 
-	return 0;
+  return 0;
 }

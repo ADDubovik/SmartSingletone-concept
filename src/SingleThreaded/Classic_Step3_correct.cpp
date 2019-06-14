@@ -61,5 +61,5 @@ int main()
   // so destruction order is incorrect ...
   // ... but utility uses a variable with thread storage duration to detect thread termination.
 
-	return 0;
+  return 0;
 }
