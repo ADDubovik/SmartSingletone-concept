@@ -8,7 +8,7 @@ class WeakSingleThreadedUtility
 {
 public:
   WeakSingleThreadedUtility()
-      // To ensure that singletone will be constucted before utility
+      // To ensure that singleton will be constucted before utility
       : m_weak(SingletonWeak::instance())
   {
   }
@@ -35,19 +35,19 @@ void cracker()
 
 
 // 1. Register cracker() using std::atexit
-// 2. Create singletone
+// 2. Create singleton
 // 3. Create utility
 auto reg = [](){ std::atexit(&cracker); return 0; }();
 auto utility = WeakSingleThreadedUtility();
 
 // This guarantee destruction in order:
 // - utility;
-// - singletone.
+// - singleton.
 // This order is correct.
 // Additionally, there's a copy of shared_ptr in the class instance...
-// ... but there was std::atexit registered before singletone,
-// so cracker() will be invoked after destruction of utility and singletone.
-// There's second try to create a singletone - and it's incorrect.
+// ... but there was std::atexit registered before singleton,
+// so cracker() will be invoked after destruction of utility and singleton.
+// There's second try to create a singleton - and it's incorrect.
 
 
 int main()

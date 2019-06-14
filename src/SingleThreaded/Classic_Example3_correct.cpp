@@ -31,14 +31,14 @@ private:
 
 
 // 1. Create an empty unique_ptr
-// 2. Create singletone (because of modified ClassicSingleThreadedUtility c-tor)
+// 2. Create singleton (because of modified ClassicSingleThreadedUtility c-tor)
 // 3. Create utility
 std::unique_ptr<ClassicSingleThreadedUtility> emptyUnique;
 auto utilityUnique = std::make_unique<ClassicSingleThreadedUtility>();
 
 // This guarantee destruction in order:
 // - utilityUnique;
-// - singletone;
+// - singleton;
 // - emptyUnique.
 // This order seems to be correct ...
 
@@ -55,7 +55,7 @@ int main()
 
   // Guaranteed destruction order is still the same:
   // - utilityUnique;
-  // - singletone;
+  // - singleton;
   // - emptyUnique,
   // but now utilityUnique is empty, and emptyUnique is filled,
   // so destruction order is incorrect ...
