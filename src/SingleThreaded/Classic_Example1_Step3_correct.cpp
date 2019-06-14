@@ -17,7 +17,7 @@ public:
 
   ~ClassicSingleThreadedUtility()
   {
-    if ( m_flag_weak.lock() )
+    if ( !m_flag_weak.expired() )
     {
       std::cout << "Normal processing" << std::endl;
       for ( int i = 0; i < 100; ++i )
