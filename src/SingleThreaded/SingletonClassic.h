@@ -2,8 +2,6 @@
 
 #include "SingletonPayload.h"
 
-#include <set>
-
 
 class SingletonClassic : public SingletonPayload
 {
