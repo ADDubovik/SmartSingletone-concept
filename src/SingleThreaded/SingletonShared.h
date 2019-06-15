@@ -1,12 +1,11 @@
 #pragma once
 
-#include "SingletonPayload.h"
-
 #include <memory>
 #include <iostream>
 
 
-class SingletonShared : public SingletonPayload
+template<typename T>
+class SingletonShared : public T
 {
 public:
   ~SingletonShared()

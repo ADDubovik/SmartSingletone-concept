@@ -1,4 +1,5 @@
 #include "SingletonShared.h"
+#include "Payload.h"
 
 #include <memory>
 
@@ -9,7 +10,7 @@ public:
   SharedSingleThreadedUtility()
   {
     // To ensure that singleton will be constucted before utility
-    SingletonShared::instance();
+    SingletonShared<Payload>::instance();
   }
 
   ~SharedSingleThreadedUtility()
@@ -21,7 +22,7 @@ public:
     //    instance->add(i);
 
     // ... so this code will demonstrate UB in colour
-    auto instance = SingletonShared::instance();
+    auto instance = SingletonShared<Payload>::instance();
     for ( int i = 0; i < 100; ++i )
       instance->add(i);
   }

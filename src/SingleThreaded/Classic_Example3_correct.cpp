@@ -1,4 +1,5 @@
 #include "SingletonClassic.h"
+#include "Payload.h"
 
 #include <memory>
 #include <iostream>
@@ -12,14 +13,14 @@ public:
     thread_local auto flag_strong = std::make_shared<char>(0);
     m_flag_weak = flag_strong;
 
-    SingletonClassic::instance();
+    SingletonClassic<Payload>::instance();
   }
 
   ~ClassicSingleThreadedUtility()
   {
     if ( !m_flag_weak.expired() )
     {
-      auto &instance = SingletonClassic::instance();
+      auto &instance = SingletonClassic<Payload>::instance();
       for ( int i = 0; i < 100; ++i )
         instance.add(i);
     }

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "SingletonPayload.h"
-
 #include <memory>
 #include <iostream>
 
 
-class SingletonWeak : public SingletonPayload
+template<typename T>
+class SingletonWeak : public T
 {
 public:
   ~SingletonWeak()

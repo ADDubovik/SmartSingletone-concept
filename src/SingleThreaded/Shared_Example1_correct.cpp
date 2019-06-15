@@ -1,4 +1,5 @@
 #include "SingletonShared.h"
+#include <Payload.h>
 
 #include <memory>
 
@@ -9,12 +10,12 @@ public:
   SharedSingleThreadedUtility()
   {
     // To ensure that singleton will be constucted before utility
-    SingletonShared::instance();
+    SingletonShared<Payload>::instance();
   }
 
   ~SharedSingleThreadedUtility()
   {
-    if ( auto instance = SingletonShared::instance() )
+    if ( auto instance = SingletonShared<Payload>::instance() )
       for ( int i = 0; i < 100; ++i )
         instance->add(i);
   }

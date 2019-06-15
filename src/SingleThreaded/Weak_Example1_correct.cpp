@@ -1,4 +1,5 @@
 #include "SingletonWeak.h"
+#include "Payload.h"
 
 #include <memory>
 
@@ -8,7 +9,7 @@ class WeakSingleThreadedUtility
 public:
   WeakSingleThreadedUtility()
       // To ensure that singleton will be constucted before utility
-      : m_weak(SingletonWeak::instance())
+      : m_weak(SingletonWeak<Payload>::instance())
   {
   }
 
@@ -23,7 +24,7 @@ public:
 
 private:
   // A weak copy of smart pointer, not a reference
-  std::weak_ptr<SingletonWeak> m_weak;
+  std::weak_ptr<SingletonWeak<Payload>> m_weak;
 };
 
 

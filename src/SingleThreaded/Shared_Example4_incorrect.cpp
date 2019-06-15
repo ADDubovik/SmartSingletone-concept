@@ -1,4 +1,5 @@
 #include "SingletonShared.h"
+#include "Payload.h"
 
 #include <memory>
 #include <cstdlib>
@@ -9,7 +10,7 @@ class SharedSingleThreadedUtility
 public:
   SharedSingleThreadedUtility()
       // To ensure that singleton will be constucted before utility
-      : m_singleton(SingletonShared::instance())
+      : m_singleton(SingletonShared<Payload>::instance())
   {
   }
 
@@ -28,7 +29,7 @@ public:
 
 private:
   // A copy of smart pointer, not a reference
-  std::shared_ptr<SingletonShared> m_singleton;
+  std::shared_ptr<SingletonShared<Payload>> m_singleton;
 };
 
 

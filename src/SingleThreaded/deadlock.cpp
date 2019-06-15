@@ -1,29 +1,23 @@
-#include <memory>
+#include "SingletonShared.h"
+
 #include <iostream>
 #include <functional>
 
 
-class SingletonShared
+class CallbackPayload
 {
 public:
-  ~SingletonShared()
+  CallbackPayload() = default;
+  ~CallbackPayload()
   {
-    std::cout << "~SingletonShared()" << std::endl;
+    std::cout << "~CallbackPayload()" << std::endl;
   }
 
-  SingletonShared(const SingletonShared &) = delete;
-  SingletonShared(SingletonShared &&) = delete;
+  CallbackPayload(const CallbackPayload &) = delete;
+  CallbackPayload(CallbackPayload &&) = delete;
 
-  SingletonShared& operator=(const SingletonShared &) = delete;
-  SingletonShared& operator=(SingletonShared &&) = delete;
-
-  static std::shared_ptr<SingletonShared> instance()
-  {
-    std::cout << "instance()" << std::endl;
-    // "new" and no std::make_shared because of private c-tor
-    static auto inst = std::shared_ptr<SingletonShared>(new SingletonShared);
-    return inst;
-  }
+  CallbackPayload& operator=(const CallbackPayload &) = delete;
+  CallbackPayload& operator=(CallbackPayload &&) = delete;
 
   void setCallback(std::function<void()> &&fn)
   {
@@ -31,19 +25,14 @@ public:
   }
 
 private:
-  SingletonShared()
-  {
-    std::cout << "SingletonShared()" << std::endl;
-  }
-
   std::function<void()> m_callbackFn;
 };
 
 
 int main()
 {
-  SingletonShared::instance()->setCallback(
-      [capture = SingletonShared::instance()](){}
+  SingletonShared<CallbackPayload>::instance()->setCallback(
+      [capture = SingletonShared<CallbackPayload>::instance()](){}
   );
 
   return 0;

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "SingletonPayload.h"
-
 #include <iostream>
 
 
-class SingletonClassic : public SingletonPayload
+template<typename T>
+class SingletonClassic : public T
 {
 public:
   ~SingletonClassic()

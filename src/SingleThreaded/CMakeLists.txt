@@ -1,7 +1,7 @@
 
 set(SRC
+	Payload.h
 	SingletonClassic.h
-	SingletonPayload.h
 	SingletonShared.h
 	SingletonWeak.h
 	fake.cpp

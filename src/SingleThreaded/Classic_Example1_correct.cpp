@@ -1,4 +1,5 @@
 #include "SingletonClassic.h"
+#include "Payload.h"
 
 #include <memory>
 
@@ -9,12 +10,12 @@ public:
   ClassicSingleThreadedUtility()
   {
     // To ensure that singleton will be constucted before utility
-    SingletonClassic::instance();
+    SingletonClassic<Payload>::instance();
   }
 
   ~ClassicSingleThreadedUtility()
   {
-    auto &instance = SingletonClassic::instance();
+    auto &instance = SingletonClassic<Payload>::instance();
     for ( int i = 0; i < 100; ++i )
       instance.add(i);
   }
