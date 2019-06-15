@@ -19,9 +19,9 @@ public:
   {
     if ( !m_flag_weak.expired() )
     {
-      std::cout << "Normal processing" << std::endl;
+      auto &instance = SingletonClassic::instance();
       for ( int i = 0; i < 100; ++i )
-        SingletonClassic::instance().add(i);
+        instance.add(i);
     }
   }
 

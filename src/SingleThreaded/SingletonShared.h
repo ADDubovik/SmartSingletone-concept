@@ -3,12 +3,16 @@
 #include "SingletonPayload.h"
 
 #include <memory>
+#include <iostream>
 
 
 class SingletonShared : public SingletonPayload
 {
 public:
-  ~SingletonShared() = default;
+  ~SingletonShared()
+  {
+    std::cout << "~SingletonShared()" << std::endl;
+  }
 
   SingletonShared(const SingletonShared &) = delete;
   SingletonShared(SingletonShared &&) = delete;
@@ -18,11 +22,15 @@ public:
 
   static std::shared_ptr<SingletonShared> instance()
   {
+    std::cout << "instance()" << std::endl;
     // "new" and no std::make_shared because of private c-tor
     static auto inst = std::shared_ptr<SingletonShared>(new SingletonShared);
     return inst;
   }
 
 private:
-  SingletonShared() = default;
+  SingletonShared()
+  {
+    std::cout << "SingletonShared()" << std::endl;
+  }
 };

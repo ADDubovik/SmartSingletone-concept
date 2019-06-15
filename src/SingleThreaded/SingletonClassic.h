@@ -2,11 +2,16 @@
 
 #include "SingletonPayload.h"
 
+#include <iostream>
+
 
 class SingletonClassic : public SingletonPayload
 {
 public:
-  ~SingletonClassic() = default;
+  ~SingletonClassic()
+  {
+    std::cout << "~SingletonClassic()" << std::endl;
+  }
 
   SingletonClassic(const SingletonClassic &) = delete;
   SingletonClassic(SingletonClassic &&) = delete;
@@ -16,10 +21,14 @@ public:
 
   static SingletonClassic& instance()
   {
+    std::cout << "instance()" << std::endl;
     static SingletonClassic inst;
     return inst;
   }
 
 private:
-  SingletonClassic() = default;
+  SingletonClassic()
+  {
+    std::cout << "SingletonClassic()" << std::endl;
+  }
 };
