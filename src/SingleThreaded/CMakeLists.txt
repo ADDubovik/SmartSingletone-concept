@@ -27,6 +27,7 @@ add_executable(Shared_Example5_incorrect Shared_Example5_incorrect.cpp)
 
 add_executable(Weak_Example1_correct   Weak_Example1_correct.cpp)
 add_executable(Weak_Example2_incorrect Weak_Example2_incorrect.cpp)
+add_executable(Weak_Example3_correct Weak_Example3_correct.cpp)
 
 
 set_property(TARGET Classic_Example1_correct   PROPERTY FOLDER "SingleThreaded")
@@ -41,3 +42,4 @@ set_property(TARGET Shared_Example5_incorrect PROPERTY FOLDER "SingleThreaded")
 
 set_property(TARGET Weak_Example1_correct   PROPERTY FOLDER "SingleThreaded")
 set_property(TARGET Weak_Example2_incorrect PROPERTY FOLDER "SingleThreaded")
+set_property(TARGET Weak_Example3_correct PROPERTY FOLDER "SingleThreaded")
