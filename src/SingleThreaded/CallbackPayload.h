@@ -1,6 +1,5 @@
-#include "SingletonShared.h"
+#pragma once
 
-#include <iostream>
 #include <functional>
 
 
@@ -27,13 +26,3 @@ public:
 private:
   std::function<void()> m_callbackFn;
 };
-
-
-int main()
-{
-  SingletonShared<CallbackPayload>::instance()->setCallback(
-      [capture = SingletonShared<CallbackPayload>::instance()](){}
-  );
-
-  return 0;
-}
