@@ -34,15 +34,10 @@ private:
 int main()
 {
   auto utility = std::make_shared<SharedSingleThreadedUtility>();
+  auto something = std::make_shared<SomethingWithVeryImportantDestructor>();
 
-  utility->setCallback(
-      [
-        utility,
-        something = std::make_shared<SomethingWithVeryImportantDestructor>()
-      ]
-      ()
-      {}
-  );
+  // lambda with "utility" and "something" captured
+  utility->setCallback( [utility, something](){} );
 
   return 0;
 }

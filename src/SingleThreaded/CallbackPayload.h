@@ -7,10 +7,7 @@ class CallbackPayload
 {
 public:
   CallbackPayload() = default;
-  ~CallbackPayload()
-  {
-    std::cout << "~CallbackPayload()" << std::endl;
-  }
+  ~CallbackPayload() = default;
 
   CallbackPayload(const CallbackPayload &) = delete;
   CallbackPayload(CallbackPayload &&) = delete;
