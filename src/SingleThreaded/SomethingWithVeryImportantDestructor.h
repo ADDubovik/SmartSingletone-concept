@@ -15,9 +15,9 @@ public:
     std::cout << "~SomethingWithVeryImportantDestructor()" << std::endl;
   }
 
-  SomethingWithVeryImportantDestructor(const SomethingWithVeryImportantDestructor &) = default;
-  SomethingWithVeryImportantDestructor(SomethingWithVeryImportantDestructor &&) = default;
+  SomethingWithVeryImportantDestructor(const SomethingWithVeryImportantDestructor &) = delete;
+  SomethingWithVeryImportantDestructor(SomethingWithVeryImportantDestructor &&) = delete;
 
-  SomethingWithVeryImportantDestructor& operator=(const SomethingWithVeryImportantDestructor &) = default;
-  SomethingWithVeryImportantDestructor& operator=(SomethingWithVeryImportantDestructor &&) = default;
+  SomethingWithVeryImportantDestructor& operator=(const SomethingWithVeryImportantDestructor &) = delete;
+  SomethingWithVeryImportantDestructor& operator=(SomethingWithVeryImportantDestructor &&) = delete;
 };
